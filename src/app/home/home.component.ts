@@ -4,7 +4,7 @@ import { FormControl } from "@angular/forms";
 import { MapsAPILoader } from '@agm/core';
 declare var google;
 import { first } from 'rxjs/operators';
-import { UserService, AuthenticationService } from '../_services';
+import { UserService, AuthenticationService, AlertService } from '../_services';
 import { UserModel } from '../_models/user';
 
 @Component({ templateUrl: 'home.component.html',
@@ -22,10 +22,11 @@ export class HomeComponent implements OnInit {
     users : UserModel = new UserModel()
     places: any = [];
     id: number;
+    autocomplete:any;
     private user = localStorage.getItem('email');
     constructor(
         private authenticationService: AuthenticationService,
-        private userService: UserService,
+        private alertService: AlertService,
         private mapsAPILoader: MapsAPILoader,
         private ngZone: NgZone
     ) {
@@ -46,13 +47,13 @@ export class HomeComponent implements OnInit {
 
     //load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
-      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+      this.autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ["address"]
       });
-      autocomplete.addListener("place_changed", () => {
+      this.autocomplete.addListener("place_changed", () => {
         this.ngZone.run(() => {
           //get the place result
-          let place = autocomplete.getPlace();
+          let place = this.autocomplete.getPlace();
 
           //verify result
           if (place.geometry === undefined || place.geometry === null) {
@@ -66,6 +67,17 @@ export class HomeComponent implements OnInit {
         });
       });
     });
+    }
+
+    savePoints(){
+
+      if (this.places.indexOf(document.getElementById(this.autocomplete.gm_accessors_.place.se.formattedPrediction)) > -1) {
+        this.alertService.error("This place already exists");
+      } else {
+        this.places.push(this.autocomplete.gm_accessors_.place.se.formattedPrediction)
+  }
+  console.log(this.autocomplete.gm_accessors_.place.se.formattedPrediction)
+      console.log(this.places, "--array")
     }
 
     private setCurrentPosition() {
