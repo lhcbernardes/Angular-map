@@ -12,6 +12,7 @@ import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
     imports: [
@@ -19,6 +20,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ReactiveFormsModule,
         HttpClientModule,
         BsDropdownModule.forRoot(),
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyALnSUryBrLm2CmEl2sfP4dIrmMi1RpDsw',
+            libraries: ["places"]
+          }),
         BrowserAnimationsModule,
         appRoutingModule
     ],
