@@ -1,7 +1,7 @@
 <div class="container">
-  <h1>Search for the location point</h1>
+  <h1>Angular 2 Google Maps Places Autocomplete</h1>
   <div class="form-group">
-    <input placeholder="Enter location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+    <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
   </div>
   <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
     <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>

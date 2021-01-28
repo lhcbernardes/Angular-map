@@ -22,7 +22,7 @@ import { PerfilComponent } from './perfil';
         HttpClientModule,
         BsDropdownModule.forRoot(),
         AgmCoreModule.forRoot({
-            apiKey: 'AIzaSyALnSUryBrLm2CmEl2sfP4dIrmMi1RpDsw',
+            apiKey: 'AIzaSyAg_SeG1MDWG7ugSWjUjZJeXHw4yX7vPOI',
             libraries: ["places"]
           }),
         BrowserAnimationsModule,
