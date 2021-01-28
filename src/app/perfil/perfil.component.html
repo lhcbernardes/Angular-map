@@ -1,0 +1,40 @@
+<h2>Perfil</h2>
+<form [formGroup]="perfilForm" (ngSubmit)="onSubmit()" *ngIf="userService.user" >
+    <div class="form-group">
+        <img [src]="userService.user.avatar"/>
+    </div>
+    <div class="form-group">
+        <label for="job">Job</label>
+        <input type="text" formControlName="job" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.job.errors }" />
+        <div *ngIf="submitted && f.job.errors" class="invalid-feedback">
+            <div *ngIf="f.job.errors.required">Job is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" formControlName="email" class="form-control" [(ngModel)]="userService.user.email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="first">First Name</label>
+        <input type="text" formControlName="first" class="form-control" [(ngModel)]="userService.user.first_name" [ngClass]="{ 'is-invalid': submitted && f.first.errors }" />
+        <div *ngIf="submitted && f.first.errors" class="invalid-feedback">
+            <div *ngIf="f.first.errors.required">First Name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="last">Last Name</label>
+        <input type="text" formControlName="last" class="form-control" [(ngModel)]="userService.user.last_name" [ngClass]="{ 'is-invalid': submitted && f.last.errors }" />
+        <div *ngIf="submitted && f.last.errors" class="invalid-feedback">
+            <div *ngIf="f.last.errors.required">Last Name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading || !perfilForm.valid" class="btn btn-primary">
+            <span *ngIf="loading || !perfilForm.valid" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+    </div>
+</form>

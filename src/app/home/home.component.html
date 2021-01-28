@@ -1,18 +1,17 @@
-<h1>Hi {{currentUser.firstName}}!</h1>
-<h3>All registered users:</h3>
-<ul>
-    <li *ngFor="let user of users">
-        {{user.email}}
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
-    </li>
-</ul>
-
 <div class="container">
-  <h1>Angular 2 Google Maps Places Autocomplete</h1>
+  <h1>Search for the location point</h1>
   <div class="form-group">
-    <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+    <input placeholder="Enter location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
   </div>
   <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
     <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
   </agm-map>
 </div>
+
+<h3>Saved Points</h3>
+<ul>
+    <li *ngFor="let place of places">
+        {{place}}
+        - <a class="text-danger">Delete</a>
+    </li>
+</ul>

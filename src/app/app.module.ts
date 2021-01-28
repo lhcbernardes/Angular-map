@@ -13,6 +13,7 @@ import { AlertComponent } from './_components';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
+import { PerfilComponent } from './perfil';
 
 @NgModule({
     imports: [
@@ -31,6 +32,7 @@ import { AgmCoreModule } from '@agm/core';
         AppComponent,
         HomeComponent,
         LoginComponent,
+        PerfilComponent,
         RegisterComponent,
         AlertComponent
     ],

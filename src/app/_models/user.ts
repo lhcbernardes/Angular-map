@@ -3,7 +3,11 @@
 /**
  */
 export class UserModel {
-data: Data[];
+page: number
+per_page: number
+total: number
+total_pages: number
+data: Data[]
 
 constructor(values = {}) {
   Object.keys(this).forEach(key => {
