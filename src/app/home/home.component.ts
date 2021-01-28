@@ -1,11 +1,12 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { MapsAPILoader } from '@agm/core';
-
+declare var google;
 import { first } from 'rxjs/operators';
 import { UserService, AuthenticationService } from '../_services';
 
-@Component({ templateUrl: 'home.component.html' })
+@Component({ templateUrl: 'home.component.html',
+styleUrls:  [ 'home.component.css' ] })
 export class HomeComponent implements OnInit {
   public latitude: number;
   public longitude: number;
