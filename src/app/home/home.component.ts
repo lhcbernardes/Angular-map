@@ -1,15 +1,16 @@
-import { Data } from './../_models/user';
-import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { MapsAPILoader } from '@agm/core';
 declare var google;
-import { first } from 'rxjs/operators';
-import { UserService, AuthenticationService, AlertService } from '../_services';
+import { AuthenticationService, AlertService } from '../_services';
 import { UserModel } from '../_models/user';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
 
 @Component({ templateUrl: 'home.component.html',
 styleUrls:  [ 'home.component.css' ] })
 export class HomeComponent implements OnInit {
+  modalRef: BsModalRef;
   public latitude: number;
   public longitude: number;
   public searchControl: FormControl;
@@ -28,6 +29,7 @@ export class HomeComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
         private mapsAPILoader: MapsAPILoader,
+        private modalService: BsModalService,
         private ngZone: NgZone
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
@@ -88,5 +90,10 @@ export class HomeComponent implements OnInit {
           this.zoom = 12;
         });
       }
+    }
+
+    openModal(template: TemplateRef<any>) {
+      console.log(template)
+      this.modalRef = this.modalService.show(template);
     }
 }

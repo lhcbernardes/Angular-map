@@ -14,12 +14,14 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
 import { PerfilComponent } from './perfil';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
+        ModalModule.forRoot(),
         BsDropdownModule.forRoot(),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyAg_SeG1MDWG7ugSWjUjZJeXHw4yX7vPOI',

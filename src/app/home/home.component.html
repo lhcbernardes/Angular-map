@@ -1,8 +1,12 @@
 <div class="container">
-  <h1>Angular 2 Google Maps Places Autocomplete</h1>
-  <div class="form-group">
-    <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
-    <button (click)='savePoints()'>Add</button>
+  <h1>Maps Points</h1>
+  <div class="form-row align-items-center">
+    <div class="col-sm-11 mt-1 mb-2">
+      <input placeholder="choose the location and then press the button --> Add" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+    </div>
+    <div class="col-sm-1">
+      <button (click)='savePoints()'>Add</button>
+    </div>
   </div>
   <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
     <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
@@ -12,6 +16,43 @@
 <h3 class="mt-2">Saved Points</h3>
 <ul>
     <li *ngFor="let place of places">
-        {{place}} - <button>Comments</button>
+        {{place}} - <button (click)="openModal(template)">Comments</button>
     </li>
 </ul>
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Modal</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    This is a modal.
+  </div>
+  <div class="modal-footer">
+    <!-- <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="password">Comentario</label>
+          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+              <div *ngIf="f.password.errors.required">Password is required</div>
+          </div>
+      </div>
+      <div class="form-group">
+          <button [disabled]="loading" class="btn btn-primary">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Login
+          </button>
+          <a routerLink="/register" class="btn btn-link">Register</a>
+      </div>
+  </form> -->
+  </div>
+</ng-template>
