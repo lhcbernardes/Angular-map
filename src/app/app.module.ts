@@ -15,12 +15,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
 import { PerfilComponent } from './perfil';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { RatingModule } from 'ngx-bootstrap/rating';
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
+        RatingModule.forRoot(),
         ModalModule.forRoot(),
         BsDropdownModule.forRoot(),
         AgmCoreModule.forRoot({

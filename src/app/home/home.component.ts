@@ -1,5 +1,5 @@
 import { Component, ElementRef, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormControl } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MapsAPILoader } from '@agm/core';
 declare var google;
 import { AuthenticationService, AlertService } from '../_services';
@@ -19,23 +19,43 @@ export class HomeComponent implements OnInit {
   @ViewChild("search")
   public searchElementRef: ElementRef;
 
+  // Map
     currentUser: any;
     users : UserModel = new UserModel()
     places: any = [];
     id: number;
     autocomplete:any;
-    private user = localStorage.getItem('email');
+
+  // Form
+    form: FormGroup;
+    loading = false;
+    submitted = false;
+    returnUrl: string;
+
+  // Rating
+    max = 10;
+    rate = 7;
+    isReadonly = false;
+    overStar: number | undefined;
+    percent: number;
     constructor(
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
         private mapsAPILoader: MapsAPILoader,
         private modalService: BsModalService,
+        private formBuilder: FormBuilder,
         private ngZone: NgZone
     ) {
         this.currentUser = this.authenticationService.currentUserValue;
     }
+    
 
     ngOnInit() {
+      this.form = this.formBuilder.group({
+        rating: ['', Validators.required],
+        comment: ['', Validators.required]
+    });
+
     //set google maps defaults
     this.zoom = 4;
     this.latitude = 39.8282;
@@ -62,6 +82,10 @@ export class HomeComponent implements OnInit {
             return;
           }
           console.log(place.geometry.location)
+
+          // reset alerts on submit
+          this.alertService.clear();
+
           //set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
@@ -71,15 +95,32 @@ export class HomeComponent implements OnInit {
     });
     }
 
-    savePoints(){
+    onSubmit(){
+      this.submitted = true;
 
-      if (this.places.indexOf(document.getElementById(this.autocomplete.gm_accessors_.place.se.formattedPrediction)) > -1) {
+        // reset alerts on submit
+        this.alertService.clear();
+        
+        // stop here if form is invalid
+        if (this.form.invalid) {
+            return;
+        }
+
+        this.loading = true;
+    }
+
+    // convenience getter for easy access to form fields
+    get f() { return this.form.controls; }
+
+    // compare if existe and add 
+    savePoints(){
+       // reset alerts on submit
+       this.alertService.clear();
+      if (this.places.indexOf(this.autocomplete.gm_accessors_.place.se.formattedPrediction) > -1) {
         this.alertService.error("This place already exists");
       } else {
         this.places.push(this.autocomplete.gm_accessors_.place.se.formattedPrediction)
-  }
-  console.log(this.autocomplete.gm_accessors_.place.se.formattedPrediction)
-      console.log(this.places, "--array")
+      }
     }
 
     private setCurrentPosition() {
@@ -95,5 +136,14 @@ export class HomeComponent implements OnInit {
     openModal(template: TemplateRef<any>) {
       console.log(template)
       this.modalRef = this.modalService.show(template);
+    }
+
+    hoveringOver(value: number): void {
+      this.overStar = value;
+      this.percent = (value / this.max) * 100;
+    }
+   
+    resetStar(): void {
+      this.overStar = void 0;
     }
 }

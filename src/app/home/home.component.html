@@ -31,28 +31,39 @@
     This is a modal.
   </div>
   <div class="modal-footer">
-    <!-- <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="form-group">
-          <label for="email">Email</label>
-          <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-              <div *ngIf="f.email.errors.required">Email is required</div>
+        
+          <label for="comment">Rating</label>
+          <rating [(ngModel)]="rate" [max]="5" formControlName="rating" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
+        [titles]="['one','two','three']"></rating>
+          <span class="label"
+                [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
+                [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
+          <!-- <div class="card">
+              <pre class="card-block card-header" style="margin:15px 0;">Rate: <b>{{rate}}</b>;  Readonly is: <i>{{isReadonly}}</i>;  Hovering over: <b>{{overStar || "none"}}</b></pre>
           </div>
-      </div>
-      <div class="form-group">
-          <label for="password">Comentario</label>
-          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-              <div *ngIf="f.password.errors.required">Password is required</div>
-          </div>
-      </div>
-      <div class="form-group">
-          <button [disabled]="loading" class="btn btn-primary">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              Login
+          
+          <button type="button" class="btn btn-sm btn-danger" (click)="rate = 0"
+                  [disabled]="isReadonly">Clear
           </button>
-          <a routerLink="/register" class="btn btn-link">Register</a>
+          <button type="button" class="btn btn-sm btn-primary"
+                  (click)="isReadonly = ! isReadonly">Toggle Readonly
+          </button> -->
       </div>
-  </form> -->
+      <div class="form-group">
+          <label for="comment">Commentary</label>
+          <input type="comment" formControlName="comment" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.comment.errors }" />
+          <div *ngIf="submitted && f.comment.errors" class="invalid-feedback">
+              <div *ngIf="f.comment.errors.required">Comment is required</div>
+          </div>
+      </div>
+      <div class="form-group">
+          <button [disabled]="loading || !form.valid" class="btn btn-primary">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Save
+          </button>
+      </div>
+  </form> 
   </div>
 </ng-template>
