@@ -1,39 +1,12 @@
 <!-- nav -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light"  *ngIf="currentUser">
   <a class="navbar-brand" routerLink="/">Teste</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-          <div
-            class="btn-group"
-            dropdown
-            #dropdown="bs-dropdown"
-            [insideClick]="false"
-          >
-            <button class="btn ml-auto" dropdownToggle type="button">
-              <i class="fas fa-bars">Perfil</i>
-            </button>
-            <ul *dropdownMenu class="dropdown-menu" role="menu">
-              <li role="menuitem">
-                <a class="dropdown-item" routerLink="/perfil">General</a>
-              </li>
-              <li class="divider dropdown-divider"></li>
-              <li role="menuitem">
-                <a class="dropdown-item" (click)="logout()">Logout</a>
-              </li>
-            </ul>
-          </div>
-        </li>
-    </ul>
-  </div>
+  <a class="navbar-brand" routerLink="/perfil">General</a>
+  <a class="navbar-brand" (click)="logout()">Logout</a>
 </nav>
 <!-- main content container -->
-<div class="jumbotron jumbotron-fluid">
-    <div class="container w-100 h-100">
+<div class="jumbotron jumbotron-fluid mb-0">
+    <div class="container">
         <div class="row">
             <div class="col-sm-8 offset-sm-2">
                 <alert></alert>

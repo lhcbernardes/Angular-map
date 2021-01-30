@@ -1,3 +1,4 @@
+import { PlaceModel } from './../_models/place';
 import { Component, ElementRef, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MapsAPILoader } from '@agm/core';
@@ -5,7 +6,6 @@ declare var google;
 import { AuthenticationService, AlertService } from '../_services';
 import { UserModel } from '../_models/user';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
 
 @Component({ templateUrl: 'home.component.html',
 styleUrls:  [ 'home.component.css' ] })
@@ -21,11 +21,12 @@ export class HomeComponent implements OnInit {
 
   // Map
     currentUser: any;
-    users : UserModel = new UserModel()
-    places: any = [];
+    users : UserModel = new UserModel();
+    //places: PlaceModel = new PlaceModel();
+    places:any = [];
     id: number;
     autocomplete:any;
-
+    list = {}
   // Form
     form: FormGroup;
     loading = false;
@@ -38,6 +39,11 @@ export class HomeComponent implements OnInit {
     isReadonly = false;
     overStar: number | undefined;
     percent: number;
+
+  // Modal
+  title: string = ' ';
+  comments = [];
+  local: number;
     constructor(
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
@@ -107,15 +113,31 @@ export class HomeComponent implements OnInit {
         }
 
         this.loading = true;
+        //this.places.concat(this.f.rating.value,this.f.comment.value)
+        console.log(this.places)
+        this.form.reset();
+        this.submitted = false;
     }
+
+    openModal(template: TemplateRef<any>, place) {
+      this.title = place;
+      this.local = this.places.indexOf(place)
+
+      // AQUI
+      //this.comments = this.places[this.local];
+      this.modalRef = this.modalService.show(template);
+      console.log(this.places)
+      }
 
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
-    // compare if existe and add 
+    
     savePoints(){
        // reset alerts on submit
        this.alertService.clear();
+
+       // compare if existe and add 
       if (this.places.indexOf(this.autocomplete.gm_accessors_.place.se.formattedPrediction) > -1) {
         this.alertService.error("This place already exists");
       } else {
@@ -133,10 +155,7 @@ export class HomeComponent implements OnInit {
       }
     }
 
-    openModal(template: TemplateRef<any>) {
-      console.log(template)
-      this.modalRef = this.modalService.show(template);
-    }
+   
 
     hoveringOver(value: number): void {
       this.overStar = value;

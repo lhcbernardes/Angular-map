@@ -16,19 +16,33 @@
 <h3 class="mt-2">Saved Points</h3>
 <ul>
     <li *ngFor="let place of places">
-        {{place}} - <button (click)="openModal(template)">Comments</button>
+        {{place}} - <button (click)="openModal(template, place)">Comments</button>
     </li>
 </ul>
 
 <ng-template #template>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Modal</h4>
+    <h4 class="modal-title pull-left">{{title}}</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    This is a modal.
+    <div class="col-md-12" *ngFor="let comment of comments">
+      <div class="card" style="width: 25rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{comment.name}}</h5>
+            <label for="comment">Rating</label>
+            <rating [(ngModel)]="rate" [max]="5" formControlName="rating" [readonly]="true" (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
+          [titles]="['one','two','three']"></rating>
+            <span class="label"
+                  [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
+                  [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
+            <p class="card-text">{{comment.comment}}</p>
+            <a href="#" class="btn btn-primary">View</a>
+          </div>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
      <form [formGroup]="form" (ngSubmit)="onSubmit()">
