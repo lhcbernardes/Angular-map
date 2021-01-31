@@ -1,17 +1,15 @@
 <!-- nav -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light"  *ngIf="currentUser">
   <a class="navbar-brand" routerLink="/">Teste</a>
-  <a class="navbar-brand" routerLink="/perfil">General</a>
+  <a class="navbar-brand" routerLink="/perfil">Perfil</a>
   <a class="navbar-brand" (click)="logout()">Logout</a>
 </nav>
 <!-- main content container -->
-<div class="jumbotron jumbotron-fluid mb-0">
     <div class="container">
         <div class="row">
-            <div class="col-sm-8 offset-sm-2">
+            <div class="col-sm-8 offset-sm-2 mt-5">
                 <alert></alert>
                 <router-outlet></router-outlet>
             </div>
         </div>
     </div>
-</div>

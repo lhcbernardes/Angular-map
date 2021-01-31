@@ -30,12 +30,11 @@ export class HomeComponent implements OnInit {
   // Form
     form: FormGroup;
     loading = false;
-    submitted = false;
     returnUrl: string;
 
   // Rating
     max = 10;
-    rate = 7;
+    rate = 5;
     isReadonly = false;
     overStar: number | undefined;
     percent: number;
@@ -43,6 +42,7 @@ export class HomeComponent implements OnInit {
   // Modal
   title: string = ' ';
   comments = [];
+  comentByName = [];
   local: number;
     constructor(
         private authenticationService: AuthenticationService,
@@ -102,7 +102,6 @@ export class HomeComponent implements OnInit {
     }
 
     onSubmit(){
-      this.submitted = true;
 
         // reset alerts on submit
         this.alertService.clear();
@@ -113,10 +112,9 @@ export class HomeComponent implements OnInit {
         }
 
         this.loading = true;
-        //this.places.concat(this.f.rating.value,this.f.comment.value)
-        console.log(this.places)
+        this.comments.push({name: this.title, email: JSON.parse(localStorage.getItem('email')), rating: this.f.rating.value, comment: this.f.comment.value});
+        this.resetStar();
         this.form.reset();
-        this.submitted = false;
     }
 
     openModal(template: TemplateRef<any>, place) {
@@ -126,7 +124,6 @@ export class HomeComponent implements OnInit {
       // AQUI
       //this.comments = this.places[this.local];
       this.modalRef = this.modalService.show(template);
-      console.log(this.places)
       }
 
     // convenience getter for easy access to form fields

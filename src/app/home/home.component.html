@@ -5,7 +5,7 @@
       <input placeholder="choose the location and then press the button --> Add" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
     </div>
     <div class="col-sm-1">
-      <button (click)='savePoints()'>Add</button>
+      <button (click)='savePoints()' class="btn btn-info">Add</button>
     </div>
   </div>
   <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
@@ -16,7 +16,7 @@
 <h3 class="mt-2">Saved Points</h3>
 <ul>
     <li *ngFor="let place of places">
-        {{place}} - <button (click)="openModal(template, place)">Comments</button>
+        {{place}} - <button (click)="openModal(template, place)" class="btn btn-info">Comments</button>
     </li>
 </ul>
 
@@ -31,15 +31,10 @@
     <div class="col-md-12" *ngFor="let comment of comments">
       <div class="card" style="width: 25rem;">
           <div class="card-body">
-            <h5 class="card-title">{{comment.name}}</h5>
+            <h5 class="card-title">{{comment.email}}</h5>
             <label for="comment">Rating</label>
-            <rating [(ngModel)]="rate" [max]="5" formControlName="rating" [readonly]="true" (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
-          [titles]="['one','two','three']"></rating>
-            <span class="label"
-                  [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
-                  [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
+            <rating (value)="comment.rate" [max]="5" [readonly]="true"></rating>
             <p class="card-text">{{comment.comment}}</p>
-            <a href="#" class="btn btn-primary">View</a>
           </div>
       </div>
     </div>
@@ -49,32 +44,21 @@
       <div class="form-group">
         
           <label for="comment">Rating</label>
-          <rating [(ngModel)]="rate" [max]="5" formControlName="rating" [readonly]="isReadonly" (onHover)="hoveringOver($event)" (onLeave)="resetStar()"
-        [titles]="['one','two','three']"></rating>
+          <rating [(ngModel)]="rate" [max]="5" formControlName="rating" [readonly]="isReadonly" (onHover)="hoveringOver($event)"></rating>
           <span class="label"
                 [ngClass]="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}"
                 [ngStyle]="{display: (overStar && !isReadonly) ? 'inline' : 'none'}"></span>
-          <!-- <div class="card">
-              <pre class="card-block card-header" style="margin:15px 0;">Rate: <b>{{rate}}</b>;  Readonly is: <i>{{isReadonly}}</i>;  Hovering over: <b>{{overStar || "none"}}</b></pre>
-          </div>
-          
-          <button type="button" class="btn btn-sm btn-danger" (click)="rate = 0"
-                  [disabled]="isReadonly">Clear
-          </button>
-          <button type="button" class="btn btn-sm btn-primary"
-                  (click)="isReadonly = ! isReadonly">Toggle Readonly
-          </button> -->
       </div>
       <div class="form-group">
           <label for="comment">Commentary</label>
-          <input type="comment" formControlName="comment" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.comment.errors }" />
-          <div *ngIf="submitted && f.comment.errors" class="invalid-feedback">
+          <input placeholder="Type a comment" type="comment" formControlName="comment" class="form-control" [ngClass]="{ 'is-invalid': f.comment.errors }" />
+          <div *ngIf="f.comment.errors" class="invalid-feedback">
               <div *ngIf="f.comment.errors.required">Comment is required</div>
           </div>
       </div>
       <div class="form-group">
-          <button [disabled]="loading || !form.valid" class="btn btn-primary">
-              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          <button [disabled]="!form.valid" class="btn btn-info">
+              <span class="spinner-border spinner-border-sm mr-1"></span>
               Save
           </button>
       </div>
