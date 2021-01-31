@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular7tutorial": {
+    "maps": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular7tutorial",
+            "outputPath": "dist/maps",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -64,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular7tutorial:build"
+            "browserTarget": "maps:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular7tutorial:build:production"
+              "browserTarget": "maps:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular7tutorial:build"
+            "browserTarget": "maps:build"
           }
         },
         "test": {
@@ -111,7 +111,7 @@
         }
       }
     },
-    "angular7tutorial-e2e": {
+    "maps-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -120,11 +120,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular7tutorial:serve"
+            "devServerTarget": "maps:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular7tutorial:serve:production"
+              "devServerTarget": "maps:serve:production"
             }
           }
         },
@@ -140,5 +140,5 @@
       }
     }
   },
-  "defaultProject": "angular7tutorial"
+  "defaultProject": "maps"
 }
