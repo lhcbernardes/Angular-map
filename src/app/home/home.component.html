@@ -33,7 +33,7 @@
           <div class="card-body">
             <h5 class="card-title">{{comment.email}}</h5>
             <label for="comment">Rating</label>
-            <rating (value)="comment.rate" [max]="5" [readonly]="true"></rating>
+            <rating [(ngModel)]="comment.rating" [max]="5" [readonly]="true"></rating>
             <p class="card-text">{{comment.comment}}</p>
           </div>
       </div>
